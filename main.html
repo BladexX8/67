@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>67 FEIJÃO COM FARINHA EXTREMO</title>
+  <style>
+    :root {
+      --bg1: #fff1c9;
+      --bg2: #ffd7a3;
+      --card: #fffaf0;
+      --border: #9b5b22;
+      --text: #2b1d0e;
+      --accent: #ff7a00;
+      --accent2: #ff3d81;
+      --accent3: #2a9d8f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+    }
+
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .card {
+      background: var(--card);
+      border: 4px solid var(--border);
+      border-radius: 24px;
+      padding: 18px 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 12px 0 16px;
+    }
+
+    .badge {
+      background: #ffe08a;
+      border: 2px solid #c9872a;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 900;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.8rem);
+      margin: 8px 0 4px;
+      line-height: 0.95;
+      color: #b44c00;
+      text-shadow: 2px 2px 0 #ffdca5;
+    }
+
+    .sub {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 8px 0 14px;
+    }
+
+    .big {
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      font-weight: 900;
+      color: #7a2d00;
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #fff3d6;
+      border: 2px dashed #d38a34;
+    }
+
+    .meme-box {
+      margin: 10px 0;
+      background: white;
+      border: 3px solid #d6a15b;
+      border-radius: 16px;
+      padding: 14px 12px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+    }
+
+    .status {
+      margin-top: 12px;
+      background: #fff0ca;
+      border: 2px solid #d39d42;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      min-height: 50px;
+      display: grid;
+      place-items: center;
+    }
+
+    .countdown {
+      margin-top: 10px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #b04400;
+      background: #fff;
+      border: 2px solid #c88434;
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .tiny {
+      margin-top: 12px;
+      font-size: 0.92rem;
+      opacity: 0.82;
+      line-height: 1.35;
+    }
+
+    .top-banner, .bottom-banner {
+      background: #2b1d0e;
+      color: #fff7dc;
+      padding: 10px 12px;
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+
+    .top-banner {
+      border-bottom: 4px solid #c9872a;
+    }
+
+    .bottom-banner {
+      border-top: 4px solid #c9872a;
+      margin-top: 14px;
+    }
+
+    .floaty {
+      position: fixed;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      font-size: 1.4rem;
+      font-weight: 900;
+      z-index: 5;
+      animation: floatDown linear forwards;
+      opacity: 0.95;
+      text-shadow: 0 2px 0 rgba(255,255,255,0.35);
+    }
+
+    .corner {
+      position: absolute;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--accent3);
+      opacity: 0.85;
+    }
+
+    .c1 { top: 8px; left: 10px; }
+    .c2 { top: 8px; right: 10px; color: var(--accent2); }
+    .c3 { bottom: 8px; left: 10px; color: var(--accent); }
+    .c4 { bottom: 8px; right: 10px; color: #7a2d00; }
+
+    @keyframes floatDown {
+      from {
+        transform: translateY(-60px) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .wrapper {
+        padding: 10px;
+      }
+      .card {
+        padding: 14px 12px;
+        border-radius: 20px;
+      }
+      .badge {
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-banner">ATENÇÃO: CONTEÚDO ALTAMENTE FEIJOÍSTICO E SUSPEITAMENTE BRASILEIRO</div>
+
+  <div class="wrapper">
+    <div class="card">
+      <div class="corner c1">67</div>
+      <div class="corner c2">skibidi</div>
+      <div class="corner c3">feijão</div>
+      <div class="corner c4">farinha</div>
+
+      <h1>67<br>FEIJÃO COM FARINHA</h1>
+      <div class="sub">edição brega, torta e perigosamente legível</div>
+
+      <div class="badge-row">
+        <span class="badge">67</span>
+        <span class="badge">brainrot</span>
+        <span class="badge">sigma</span>
+        <span class="badge">rizz</span>
+        <span class="badge">NPC</span>
+        <span class="badge">mewing</span>
+        <span class="badge">feijão</span>
+        <span class="badge">farinha</span>
+      </div>
+
+      <div class="big">🫘 FEIJÃO COM FARINHA SUPREMACY 🥄</div>
+
+      <div class="meme-box" id="meme1">skibidi</div>
+      <div class="meme-box" id="meme2">sigma</div>
+
+      <div class="status" id="status">carregando o caos... 100%</div>
+      <div class="countdown" id="countdown">abrindo o vídeo em 20 segundos</div>
+
+      <button class="btn" id="openBtn">ABRIR O VÍDEO AGORA</button>
+
+      <div class="tiny">
+        isso aqui é basicamente um cartaz de feira com internet ruim.<br>
+        e ainda assim funciona.
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-banner">SE VOCÊ ENTENDEU TUDO, VOCÊ JÁ FOI CONTAMINADO PELO BRAINROT</div>
+
+  <script>
+    const VIDEO_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+    const memes = [
+      "67",
+      "feijão com farinha",
+      "brainrot",
+      "skibidi",
+      "sigma",
+      "rizz",
+      "NPC detected",
+      "mewing",
+      "modo caos",
+      "brrr skibidi dop dop"
+    ];
+
+    const messages = [
+      "carregando o caos... 12%",
+      "baixando feijão em alta definição...",
+      "misturando farinha premium...",
+      "ativando brainrot core...",
+      "consultando o conselho do feijão...",
+      "67 detectado em 4 dimensões...",
+      "NPC em modo festa junina...",
+      "tudo normal. absolutamente normal.",
+      "abrindo portal do meme..."
+    ];
+
+    const meme1 = document.getElementById("meme1");
+    const meme2 = document.getElementById("meme2");
+    const statusEl = document.getElementById("status");
+    const countdownEl = document.getElementById("countdown");
+    const openBtn = document.getElementById("openBtn");
+
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function spawnFloaty() {
+      const el = document.createElement("div");
+      el.className = "floaty";
+      el.textContent = randomItem(["67", "🫘", "🥄", "brainrot", "feijão", "farinha", "sigma", "skibidi"]);
+
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.top = (-20 - Math.random() * 40) + "px";
+      el.style.fontSize = (1 + Math.random() * 1.7) + "rem";
+      el.style.animationDuration = (3.5 + Math.random() * 3.5) + "s";
+      el.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
+
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }
+
+    setInterval(() => {
+      meme1.textContent = randomItem(memes);
+      meme2.textContent = randomItem(memes);
+    }, 900);
+
+    let msgIndex = 0;
+    setInterval(() => {
+      statusEl.textContent = messages[msgIndex % messages.length];
+      msgIndex++;
+    }, 1100);
+
+    const totalSeconds = 10;
+    let remaining = totalSeconds;
+
+    countdownEl.textContent = `abrindo o vídeo em ${remaining} segundos`;
+
+    const countdownTimer = setInterval(() => {
+      remaining--;
+      if (remaining > 0) {
+        countdownEl.textContent = `abrindo o vídeo em ${remaining} segundos`;
+      } else {
+        countdownEl.textContent = "abrindo o vídeo...";
+        clearInterval(countdownTimer);
+        window.location.href = VIDEO_URL;
+      }
+    }, 1000);
+
+    openBtn.addEventListener("click", () => {
+      window.location.href = VIDEO_URL;
+    });
+
+    setInterval(spawnFloaty, 220);
+    for (let i = 0; i < 18; i++) {
+      setTimeout(spawnFloaty, i * 120);
+    }
+  </script>
+</body>
+</html>
