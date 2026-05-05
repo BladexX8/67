@@ -277,26 +277,27 @@
       animation: eggplantFly linear forwards;
       user-select: none;
       filter: drop-shadow(0 3px 2px rgba(0,0,0,0.15));
+      will-change: transform, opacity;
     }
 
     @keyframes floatDown {
       from {
-        transform: translateY(-60px) rotate(0deg);
+        transform: translate3d(0, -60px, 0) rotate(0deg);
         opacity: 1;
       }
       to {
-        transform: translateY(110vh) rotate(360deg);
+        transform: translate3d(0, 110vh, 0) rotate(360deg);
         opacity: 0;
       }
     }
 
     @keyframes eggplantFly {
       from {
-        transform: translateY(-80px) translateX(0) rotate(0deg) scale(1);
+        transform: translate3d(0, -80px, 0) rotate(0deg) scale(1);
         opacity: 1;
       }
       to {
-        transform: translateY(120vh) translateX(40px) rotate(540deg) scale(1.2);
+        transform: translate3d(40px, 120vh, 0) rotate(540deg) scale(1.18);
         opacity: 0;
       }
     }
@@ -352,7 +353,9 @@
 
       <div class="badge-row">
         <span class="badge">67</span>
+        <span class="badge">42</span>
         <span class="badge">brainrot</span>
+        <span class="badge">resenha</span>
         <span class="badge">sigma</span>
         <span class="badge">rizz</span>
         <span class="badge">NPC</span>
@@ -397,8 +400,10 @@
 
     const memes = [
       "67",
+      "42",
       "feijão com farinha",
       "brainrot",
+      "resenha",
       "skibidi",
       "sigma",
       "rizz",
@@ -416,6 +421,8 @@
       "misturando farinha premium...",
       "ativando brainrot core...",
       "consultando o conselho do feijão...",
+      "42 respostas e nenhuma delas presta...",
+      "resenha detectada no sistema...",
       "67 detectado em 4 dimensões...",
       "NPC em modo festa junina...",
       "tudo normal. absolutamente normal.",
@@ -438,46 +445,74 @@
       window.location.href = VIDEO_URL;
     }
 
+    const floatyPool = [];
+    const eggplantPool = [];
+    const MAX_FLOATIES = 10;
+    const MAX_EGGPLANTS = 8;
+
     function spawnFloaty() {
+      if (floatyPool.length >= MAX_FLOATIES) {
+        const old = floatyPool.shift();
+        if (old) old.remove();
+      }
+
       const el = document.createElement("div");
       el.className = "floaty";
-      el.textContent = randomItem(["67", "🫘", "🥄", "brainrot", "feijão", "farinha", "sigma", "skibidi"]);
+      el.textContent = randomItem(["67", "42", "🫘", "🥄", "brainrot", "feijão", "farinha", "sigma", "skibidi", "resenha"]);
 
       el.style.left = Math.random() * 100 + "vw";
       el.style.top = (-20 - Math.random() * 40) + "px";
-      el.style.fontSize = (0.95 + Math.random() * 1.6) + "rem";
-      el.style.animationDuration = (3.5 + Math.random() * 3.5) + "s";
+      el.style.fontSize = (0.95 + Math.random() * 1.4) + "rem";
+      el.style.animationDuration = (4.5 + Math.random() * 2.5) + "s";
       el.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
 
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 8000);
+      floatyPool.push(el);
+
+      setTimeout(() => {
+        el.remove();
+        const index = floatyPool.indexOf(el);
+        if (index !== -1) floatyPool.splice(index, 1);
+      }, 7500);
     }
 
     function spawnEggplant() {
+      if (eggplantPool.length >= MAX_EGGPLANTS) {
+        const old = eggplantPool.shift();
+        if (old) old.remove();
+      }
+
       const el = document.createElement("div");
       el.className = "eggplant";
       el.textContent = "🍆";
 
       el.style.left = Math.random() * 100 + "vw";
       el.style.top = (-40 - Math.random() * 60) + "px";
-      el.style.fontSize = (1.4 + Math.random() * 2.3) + "rem";
-      el.style.animationDuration = (3 + Math.random() * 4.5) + "s";
+      el.style.fontSize = (1.3 + Math.random() * 2.0) + "rem";
+      el.style.animationDuration = (4 + Math.random() * 3.5) + "s";
+      el.style.transform = "rotate(" + (Math.random() * 25 - 12) + "deg)";
 
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 9000);
+      eggplantPool.push(el);
+
+      setTimeout(() => {
+        el.remove();
+        const index = eggplantPool.indexOf(el);
+        if (index !== -1) eggplantPool.splice(index, 1);
+      }, 8500);
     }
 
     setInterval(() => {
       meme1.textContent = randomItem(memes);
       meme2.textContent = randomItem(memes);
-      meme3.textContent = randomItem(["O berinjela!!", "🍆 O berinjela!! 🍆", "BERINJELA SUPREMA", "o berinjela voltou"]);
-    }, 900);
+      meme3.textContent = randomItem(["O berinjela!!", "🍆 O berinjela!! 🍆", "BERINJELA SUPREMA", "o berinjela voltou", "resenha do berinjela"]);
+    }, 1100);
 
     let msgIndex = 0;
     setInterval(() => {
       statusEl.textContent = messages[msgIndex % messages.length];
       msgIndex++;
-    }, 1100);
+    }, 1300);
 
     const totalSeconds = 20;
     let remaining = totalSeconds;
@@ -497,12 +532,12 @@
 
     openBtn.addEventListener("click", openVideo);
 
-    setInterval(spawnFloaty, 220);
-    setInterval(spawnEggplant, 260);
+    setInterval(spawnFloaty, 650);
+    setInterval(spawnEggplant, 900);
 
-    for (let i = 0; i < 18; i++) {
-      setTimeout(spawnFloaty, i * 120);
-      setTimeout(spawnEggplant, i * 150);
+    for (let i = 0; i < 8; i++) {
+      setTimeout(spawnFloaty, i * 200);
+      setTimeout(spawnEggplant, i * 240);
     }
   </script>
 </body>
