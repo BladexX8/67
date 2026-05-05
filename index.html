@@ -2,594 +2,668 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#fff1c9" />
-  <title>67 FEIJÃO COM FARINHA EXTREMO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Museu Digital de Exposição de Fotos Aura</title>
   <style>
     :root {
-      --bg1: #fff1c9;
-      --bg2: #ffd7a3;
-      --card: rgba(255, 250, 240, 0.96);
-      --border: #9b5b22;
-      --text: #2b1d0e;
-      --accent: #ff7a00;
-      --accent2: #ff3d81;
-      --accent3: #2a9d8f;
-      --shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+      --bg1: #f6f7fb;
+      --bg2: #ffffff;
+      --panel: rgba(255,255,255,0.88);
+      --panel-strong: rgba(255,255,255,1);
+      --line: rgba(15,23,42,0.10);
+      --text: #0f172a;
+      --muted: #64748b;
+      --shadow: 0 18px 50px rgba(15,23,42,0.08);
+      --accent: #64748b;
+      --accent-2: #94a3b8;
+      --accent-3: #cbd5e1;
+      --radius: 18px;
     }
 
-    * {
-      box-sizing: border-box;
+    [data-theme="sunset"] {
+      --bg1: #fff8f5;
+      --bg2: #ffffff;
+      --panel: rgba(255,255,255,0.92);
+      --panel-strong: rgba(255,255,255,1);
+      --line: rgba(124,58,237,0.12);
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #fb7185;
+      --accent-2: #f59e0b;
+      --accent-3: #c4b5fd;
     }
 
-    html, body {
-      min-height: 100%;
+    [data-theme="forest"] {
+      --bg1: #f5faf7;
+      --bg2: #ffffff;
+      --panel: rgba(255,255,255,0.92);
+      --panel-strong: rgba(255,255,255,1);
+      --line: rgba(16,185,129,0.12);
+      --text: #111827;
+      --muted: #6b7280;
+      --accent: #10b981;
+      --accent-2: #34d399;
+      --accent-3: #a7f3d0;
     }
+
+    [data-theme="neon"] {
+      --bg1: #f6f7fb;
+      --bg2: #ffffff;
+      --panel: rgba(255,255,255,0.9);
+      --panel-strong: rgba(255,255,255,1);
+      --line: rgba(100,116,139,0.12);
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #64748b;
+      --accent-2: #94a3b8;
+      --accent-3: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: system-ui, sans-serif;
       color: var(--text);
       min-height: 100vh;
-      background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+      background:
+        radial-gradient(circle at top left, rgba(148,163,184,0.16), transparent 24%),
+        radial-gradient(circle at top right, rgba(203,213,225,0.20), transparent 26%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
       overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
     }
 
-    .top-banner,
-    .bottom-banner {
-      background: #2b1d0e;
-      color: #fff7dc;
-      padding: 10px 12px;
-      font-weight: 900;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
-      text-align: center;
-    }
+    .app { min-height: 100vh; }
 
-    .top-banner {
-      border-bottom: 4px solid #c9872a;
-    }
-
-    .bottom-banner {
-      border-top: 4px solid #c9872a;
-      margin-top: 14px;
-      line-height: 1.35;
-    }
-
-    .wrapper {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 16px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card {
-      background: var(--card);
-      border: 4px solid var(--border);
-      border-radius: 24px;
-      padding: 18px 16px 16px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(4px);
-    }
-
-    .corner {
-      position: absolute;
-      font-size: 1.05rem;
-      font-weight: 900;
-      opacity: 0.9;
-      user-select: none;
-    }
-
-    .c1 { top: 8px; left: 10px; color: var(--accent3); }
-    .c2 { top: 8px; right: 10px; color: var(--accent2); }
-    .c3 { bottom: 8px; left: 10px; color: var(--accent); }
-    .c4 { bottom: 8px; right: 10px; color: #7a2d00; }
-
-    h1 {
-      font-size: clamp(2rem, 8vw, 4rem);
-      margin: 8px 0 4px;
-      line-height: 0.95;
-      color: #b44c00;
-      text-shadow: 2px 2px 0 #ffdca5;
-      letter-spacing: 0.02em;
-    }
-
-    .sub {
-      font-size: 1.02rem;
-      font-weight: 700;
-      margin: 8px 0 14px;
-      line-height: 1.35;
-    }
-
-    .badge-row {
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin: 12px 0 16px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
     }
 
-    .badge {
-      background: #ffe08a;
-      border: 2px solid #c9872a;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-weight: 900;
-      font-size: 0.92rem;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .seal {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 24px rgba(15,23,42,0.10);
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      font-size: clamp(1.02rem, 3vw, 1.5rem);
+      line-height: 1.1;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
-      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
     }
 
-    .big {
-      font-size: clamp(1.25rem, 4vw, 2rem);
-      font-weight: 900;
-      color: #7a2d00;
-      margin: 12px 0;
-      padding: 12px 12px;
-      border-radius: 16px;
-      background: #fff3d6;
-      border: 2px dashed #d38a34;
-      line-height: 1.25;
+    .brand p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 70vw;
     }
 
-    .photo-box {
-      margin: 14px 0 12px;
-      background: #fff;
-      border: 3px solid #d6a15b;
-      border-radius: 18px;
-      padding: 12px;
-    }
-
-    .photo-box img {
-      width: 100%;
-      max-width: 320px;
-      height: auto;
-      display: block;
-      margin: 0 auto 10px;
-      border-radius: 14px;
-      border: 3px solid #c88434;
-      object-fit: cover;
-      background: #f3f3f3;
-    }
-
-    .photo-caption {
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: #7a2d00;
-      line-height: 1.3;
-    }
-
-    .meme-grid {
-      display: grid;
-      gap: 10px;
-      margin: 10px 0 12px;
-    }
-
-    .meme-box {
-      background: white;
-      border: 3px solid #d6a15b;
-      border-radius: 16px;
-      padding: 14px 12px;
-      font-size: 1.12rem;
-      font-weight: 900;
-      min-height: 58px;
-      display: grid;
-      place-items: center;
-      line-height: 1.25;
-      word-break: break-word;
-    }
-
-    .status,
-    .countdown {
-      margin-top: 10px;
-      border-radius: 14px;
-      padding: 12px;
-      font-weight: 700;
-      line-height: 1.35;
-    }
-
-    .status {
-      background: #fff0ca;
-      border: 2px solid #d39d42;
-      min-height: 52px;
-      display: grid;
-      place-items: center;
-      font-size: 1rem;
-    }
-
-    .countdown {
-      background: #fff;
-      border: 2px solid #c88434;
-      font-size: 1.05rem;
-      font-weight: 900;
-      color: #b04400;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      margin-top: 16px;
-      padding: 16px;
-      border: none;
-      border-radius: 16px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: white;
-      font-size: 1.1rem;
-      font-weight: 900;
+    .menu-btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
-      transition: transform 0.12s ease, filter 0.12s ease;
+      display: grid;
+      place-items: center;
+      transition: transform 0.18s ease, background 0.18s ease;
     }
 
-    .btn:hover {
-      filter: brightness(1.03);
+    .menu-btn:hover { transform: translateY(-1px); background: var(--panel-strong); }
+
+    .menu-icon {
+      width: 20px;
+      height: 14px;
+      display: grid;
+      gap: 4px;
     }
 
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .tiny {
-      margin-top: 12px;
-      font-size: 0.92rem;
-      opacity: 0.82;
-      line-height: 1.35;
-    }
-
-    .credit {
-      margin-top: 14px;
-      font-size: 0.95rem;
-      font-weight: 900;
-      color: #6f3a10;
-      background: rgba(255, 255, 255, 0.45);
-      border: 1px solid rgba(155, 91, 34, 0.25);
+    .menu-icon span {
+      display: block;
+      height: 2px;
       border-radius: 999px;
-      padding: 10px 14px;
-      display: inline-block;
+      background: var(--text);
     }
 
-    .floaty {
+    .shell {
+      display: block;
+      padding: 22px 18px 40px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+
+    .hero h2 {
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 10px;
+      color: var(--text);
+      background: none;
+      -webkit-text-fill-color: initial;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 72ch;
+      line-height: 1.65;
+      font-size: 0.98rem;
+    }
+
+    .sections {
+      display: grid;
+      gap: 18px;
+    }
+
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.84);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(248,250,252,0.95);
+    }
+
+    .section-head strong { font-size: 1.15rem; }
+    .section-head span { color: var(--muted); font-weight: 700; font-size: 0.92rem; }
+
+    .photos {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .photo {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .photo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(15,23,42,0.08);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+      background: rgba(255,255,255,0.7);
+    }
+
+    .photo-name {
+      padding: 12px 14px;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-word;
+      background: #ffffff;
+    }
+
+    .empty {
+      padding: 18px;
+      color: var(--muted);
+    }
+
+    .drawer-backdrop {
       position: fixed;
-      left: 0;
-      top: 0;
+      inset: 0;
+      background: rgba(15,23,42,0.22);
+      opacity: 0;
       pointer-events: none;
-      font-size: 1.3rem;
-      font-weight: 900;
-      z-index: 5;
-      animation: floatDown linear forwards;
-      opacity: 0.92;
-      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.35);
-      user-select: none;
-      will-change: transform, opacity;
+      transition: opacity 0.22s ease;
+      z-index: 60;
     }
 
-    .eggplant {
+    .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    .drawer {
       position: fixed;
-      left: 0;
       top: 0;
-      pointer-events: none;
-      font-size: 1.8rem;
-      z-index: 6;
-      animation: eggplantFly linear forwards;
-      user-select: none;
-      filter: drop-shadow(0 3px 2px rgba(0,0,0,0.15));
-      will-change: transform, opacity;
+      right: 0;
+      width: min(42vw, 410px);
+      height: 100vh;
+      background: rgba(255,255,255,0.95);
+      border-left: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+      box-shadow: -18px 0 50px rgba(15,23,42,0.12);
+      z-index: 70;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
     }
 
-    @keyframes floatDown {
-      from {
-        transform: translate3d(0, -60px, 0) rotate(0deg);
-        opacity: 1;
-      }
-      to {
-        transform: translate3d(0, 110vh, 0) rotate(360deg);
-        opacity: 0;
-      }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
     }
 
-    @keyframes eggplantFly {
-      from {
-        transform: translate3d(0, -80px, 0) rotate(0deg) scale(1);
-        opacity: 1;
+    .drawer-head strong { font-size: 1.05rem; }
+
+    .close-btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .drawer-body {
+      padding: 16px 18px 18px;
+      overflow-y: auto;
+    }
+
+    .drawer-section { margin-bottom: 22px; }
+
+    .drawer-section h3 {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .names { display: flex; flex-direction: column; gap: 10px; }
+
+    .name-btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .name-btn:hover {
+      transform: translateX(-2px);
+      background: var(--panel-strong);
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .theme-btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 12px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+
+    .theme-btn:hover { transform: translateY(-1px); background: var(--panel-strong); }
+    .theme-btn.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .drawer { width: 86vw; }
+
+      .topbar {
+        padding: 12px;
+        gap: 10px;
       }
-      to {
-        transform: translate3d(40px, 120vh, 0) rotate(540deg) scale(1.18);
-        opacity: 0;
+
+      .brand {
+        width: 1;
+        min-width: 0;
+        flex: 1;
       }
+
+      .brand h1 {
+        white-space: normal;
+        font-size: 1rem;
+      }
+
+      .brand p {
+        white-space: normal;
+        max-width: 100%;
+        font-size: 0.78rem;
+        margin-top: 4px;
+      }
+
+      .hero {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .hero h2 {
+        font-size: 1.65rem;
+        line-height: 1.12;
+      }
+
+      .hero p {
+        font-size: 0.9rem;
+      }
+
+      .shell {
+        padding: 14px 10px 26px;
+      }
+
+      .sections { gap: 14px; }
+      .section { border-radius: 18px; }
+
+      .section-head {
+        padding: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .section-head strong { font-size: 1rem; }
+
+      .photos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 12px;
+        gap: 10px;
+      }
+
+      .photo { border-radius: 14px; }
+      .photo img { height: 160px; }
+      .photo-name { font-size: 0.82rem; padding: 10px; }
+      .drawer-body { padding: 14px; }
+      .theme-grid { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 480px) {
-      .wrapper {
-        padding: 10px;
+      .drawer { width: 100vw; }
+
+      .topbar { align-items: center; }
+      .brand { flex: 1; }
+
+      .seal {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
       }
 
-      .card {
-        padding: 14px 12px 14px;
-        border-radius: 20px;
-      }
-
-      .badge {
-        font-size: 0.86rem;
-      }
-
-      .meme-box {
-        font-size: 1rem;
-      }
-
-      .status,
-      .countdown {
-        font-size: 0.98rem;
-      }
-
-      .btn {
-        font-size: 1rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .floaty,
-      .eggplant {
-        animation: none;
+      .brand h1 { font-size: 0.9rem; }
+      .brand p { display: block; font-size: 0.72rem; }
+      .hero h2 { font-size: 1.42rem; }
+      .hero p { font-size: 0.84rem; }
+      .photos { grid-template-columns: 1fr 1fr; }
+      .photo img { height: 138px; }
+      .theme-grid { grid-template-columns: 1fr; }
+      .name-btn, .theme-btn {
+        padding: 11px 12px;
+        font-size: 0.9rem;
+        border-radius: 12px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="top-banner">ATENÇÃO: CONTEÚDO ALTAMENTE FEIJOÍSTICO, BERRINJELOSO E SUSPEITAMENTE BRASILEIRO</div>
-
-  <div class="wrapper">
-    <div class="card">
-      <div class="corner c1">67</div>
-      <div class="corner c2">skibidi</div>
-      <div class="corner c3">feijão</div>
-      <div class="corner c4">farinha</div>
-
-      <h1>67<br>FEIJÃO COM FARINHA</h1>
-      <div class="sub">edição brega, torta e perigosamente legível</div>
-
-      <div class="badge-row">
-        <span class="badge">67</span>
-        <span class="badge">42</span>
-        <span class="badge">brainrot</span>
-        <span class="badge">resenha</span>
-        <span class="badge">sigma</span>
-        <span class="badge">rizz</span>
-        <span class="badge">NPC</span>
-        <span class="badge">mewing</span>
-        <span class="badge">feijão</span>
-        <span class="badge">farinha</span>
-        <span class="badge">berinjela</span>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="seal">🖼️</div>
+        <div>
+          <h1>Museu Digital de Exposição de Fotos Aura</h1>
+          <p>Abra o menu e escolha a vítima. Elegância e deboche em um pacote só.</p>
+        </div>
       </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
+        <div class="menu-icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+    </header>
 
-      <div class="big">🫘 FEIJÃO COM FARINHA SUPREMACY 🥄</div>
-      <div class="big">🍆 O BERINJELA!! 🍆</div>
+    <main class="shell">
+      <section class="hero">
+        <h2>Galeria com abas, menu lateral e tema trocável</h2>
+        <p>
+          Coloque as imagens na mesma pasta e liste os arquivos em <strong>PHOTOS</strong>. O site separa por nome automaticamente e abre cada pessoa no painel lateral. Sem firula inútil, só o necessário para uma humilhação estética bem organizada.
+        </p>
+      </section>
 
-      <div class="photo-box">
-        <picture>
-          <source srcset="./rafael.jpg" type="image/jpeg">
-          <source srcset="./rafael.JPG" type="image/jpeg">
-          <source srcset="./rafael.png" type="image/png">
-          <source srcset="./Rafael.jpg" type="image/jpeg">
-          <source srcset="./Rafael.png" type="image/png">
-          <img
-            id="rafaelImg"
-            src="./rafael.jpg"
-            alt="Rafael guloso irresponsavel"
-          >
-        </picture>
-        <div class="photo-caption">Rafael guloso irresponsavel</div>
-      </div>
-
-      <div class="meme-grid">
-        <div class="meme-box" id="meme1">skibidi</div>
-        <div class="meme-box" id="meme2">sigma</div>
-        <div class="meme-box" id="meme3">O berinjela!!</div>
-      </div>
-
-      <div class="status" id="status">carregando o caos... 100%</div>
-      <div class="countdown" id="countdown">abrindo o vídeo em 20 segundos</div>
-
-      <button class="btn" id="openBtn">ABRIR O VÍDEO AGORA</button>
-
-      <div class="tiny">
-        isso aqui é basicamente um cartaz de feira com internet ruim.<br>
-        e ainda assim funciona.
-      </div>
-
-      <div class="credit">Made by Lucas Indiano</div>
-    </div>
+      <div class="sections" id="content"></div>
+    </main>
   </div>
 
-  <div class="bottom-banner">SE VOCÊ ENTENDEU TUDO, VOCÊ JÁ FOI CONTAMINADO PELO BRAINROT</div>
+  <div class="drawer-backdrop" id="backdrop"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <strong>Menu do museu</strong>
+      <button class="close-btn" id="closeBtn" aria-label="Fechar menu">×</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="drawer-section">
+        <h3>Pessoas</h3>
+        <div class="names" id="tabs"></div>
+      </div>
+
+      <div class="drawer-section">
+        <h3>Temas</h3>
+        <div class="theme-grid" id="themes">
+          <button class="theme-btn" data-theme="neon">Neon</button>
+          <button class="theme-btn" data-theme="sunset">Sunset</button>
+          <button class="theme-btn" data-theme="forest">Forest</button>          <button class="theme-btn" data-theme="dark">Dark</button>
+        </div>
+        <div class="hint">
+          O tema fica salvo no navegador. Porque repetir preferência todo dia seria muito trabalhoso para os padrões da espécie humana.
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <h3>Como funciona</h3>
+        <div class="hint">
+          Troque os nomes na lista <strong>PHOTOS</strong>. Exemplo: <strong>Rafael1.jpg</strong>, <strong>Rafael2.png</strong>, <strong>Joao1.jpg</strong>. Tudo que começar parecido vira a mesma pessoa.
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <script>
-    const VIDEO_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-
-    const memes = [
-      "67",
-      "42",
-      "feijão com farinha",
-      "brainrot",
-      "resenha",
-      "skibidi",
-      "sigma",
-      "rizz",
-      "NPC detected",
-      "mewing",
-      "modo caos",
-      "brrr skibidi dop dop",
-      "O berinjela!!",
-      "🍆🍆🍆"
+    const PHOTOS = [
+      "Rafael1.jpg",
     ];
 
-    const messages = [
-      "carregando o caos... 12%",
-      "baixando feijão em alta definição...",
-      "misturando farinha premium...",
-      "ativando brainrot core...",
-      "consultando o conselho do feijão...",
-      "42 respostas e nenhuma delas presta...",
-      "resenha detectada no sistema...",
-      "67 detectado em 4 dimensões...",
-      "NPC em modo festa junina...",
-      "tudo normal. absolutamente normal.",
-      "abrindo portal do meme...",
-      "berinjelas em trânsito..."
-    ];
+    const app = document.getElementById('app');
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+    const menuBtn = document.getElementById('menuBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const tabs = document.getElementById('tabs');
+    const content = document.getElementById('content');
+    const themeButtons = document.querySelectorAll('.theme-btn');
 
-    const meme1 = document.getElementById("meme1");
-    const meme2 = document.getElementById("meme2");
-    const meme3 = document.getElementById("meme3");
-    const statusEl = document.getElementById("status");
-    const countdownEl = document.getElementById("countdown");
-    const openBtn = document.getElementById("openBtn");
-    const rafaelImg = document.getElementById("rafaelImg");
+    let active = 'all';
+    let theme = localStorage.getItem('museu-theme') || 'neon';
 
-    function randomItem(list) {
-      return list[Math.floor(Math.random() * list.length)];
+    function openDrawer() {
+      drawer.classList.add('open');
+      backdrop.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
     }
 
-    function openVideo() {
-      window.location.href = VIDEO_URL;
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
     }
 
-    function setImageWithFallback() {
-      const sources = [
-        "./rafael.jpg",
-        "./rafael.JPG",
-        "./rafael.png",
-        "./Rafael.jpg",
-        "./Rafael.png"
-      ];
+    function normalize(file) {
+      const base = file.replace(/\.[^.]+$/, '');
+      const clean = base.replace(/[\-_]+/g, ' ').trim();
+      const match = clean.match(/^([\p{L}]+)(?:\s*\d.*)?$/u);
+      const name = match ? match[1] : (clean.split(/\s+/)[0] || 'Sem nome');
+      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    }
 
-      let index = 0;
+    function groupFiles() {
+      const map = new Map();
+      for (const file of PHOTOS) {
+        const g = normalize(file);
+        if (!map.has(g)) map.set(g, []);
+        map.get(g).push(file);
+      }
+      return [...map.entries()];
+    }
 
-      function tryNext() {
-        if (index >= sources.length) {
-          rafaelImg.alt = "Imagem não encontrada: rafael.jpg";
-          rafaelImg.style.display = "none";
-          const fallbackMsg = document.createElement("div");
-          fallbackMsg.className = "meme-box";
-          fallbackMsg.textContent = "Imagem do Rafael não encontrada. O arquivo ainda está de birra.";
-          const photoBox = rafaelImg.closest(".photo-box");
-          photoBox.insertBefore(fallbackMsg, rafaelImg.nextSibling);
-          return;
-        }
+    function renderTabs(data) {
+      tabs.innerHTML = '';
 
-        rafaelImg.src = sources[index++];
+      const allBtn = document.createElement('button');
+      allBtn.className = 'name-btn' + (active === 'all' ? ' active' : '');
+      allBtn.textContent = 'Tudo';
+      allBtn.onclick = () => {
+        active = 'all';
+        render();
+        closeDrawer();
+      };
+      tabs.appendChild(allBtn);
+
+      data.forEach(([name, files]) => {
+        const btn = document.createElement('button');
+        btn.className = 'name-btn' + (active === name ? ' active' : '');
+        btn.textContent = `${name} (${files.length})`;
+        btn.onclick = () => {
+          active = name;
+          render();
+          closeDrawer();
+          document.getElementById(`group-${CSS.escape(name)}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        tabs.appendChild(btn);
+      });
+    }
+
+    function renderContent(data) {
+      content.innerHTML = '';
+      const visible = active === 'all' ? data : data.filter(([name]) => name === active);
+
+      if (!visible.length) {
+        content.innerHTML = '<div class="empty">Nenhuma foto cadastrada. O museu ficou vazio, o que é quase um crime estético.</div>';
+        return;
       }
 
-      rafaelImg.onerror = tryNext;
-      tryNext();
+      visible.forEach(([name, files]) => {
+        const section = document.createElement('section');
+        section.className = 'section';
+        section.id = `group-${name}`;
+        section.innerHTML = `
+          <div class="section-head">
+            <strong>${name}</strong>
+            <span>${files.length} foto(s)</span>
+          </div>
+          <div class="photos">
+            ${files.map(file => `
+              <article class="photo">
+                <img src="${file}" alt="${file}">
+                <div class="photo-name">${file}</div>
+              </article>
+            `).join('')}
+          </div>
+        `;
+        content.appendChild(section);
+      });
     }
 
-    const floatyPool = [];
-    const eggplantPool = [];
-    const MAX_FLOATIES = 10;
-    const MAX_EGGPLANTS = 8;
-
-    function spawnFloaty() {
-      if (floatyPool.length >= MAX_FLOATIES) {
-        const old = floatyPool.shift();
-        if (old) old.remove();
-      }
-
-      const el = document.createElement("div");
-      el.className = "floaty";
-      el.textContent = randomItem(["67", "42", "🫘", "🥄", "brainrot", "feijão", "farinha", "sigma", "skibidi", "resenha"]);
-
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.top = (-20 - Math.random() * 40) + "px";
-      el.style.fontSize = (0.95 + Math.random() * 1.4) + "rem";
-      el.style.animationDuration = (4.5 + Math.random() * 2.5) + "s";
-      el.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
-
-      document.body.appendChild(el);
-      floatyPool.push(el);
-
-      setTimeout(() => {
-        el.remove();
-        const index = floatyPool.indexOf(el);
-        if (index !== -1) floatyPool.splice(index, 1);
-      }, 7500);
+    function render() {
+      const data = groupFiles();
+      renderTabs(data);
+      renderContent(data);
+      themeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === theme));
     }
 
-    function spawnEggplant() {
-      if (eggplantPool.length >= MAX_EGGPLANTS) {
-        const old = eggplantPool.shift();
-        if (old) old.remove();
-      }
-
-      const el = document.createElement("div");
-      el.className = "eggplant";
-      el.textContent = "🍆";
-
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.top = (-40 - Math.random() * 60) + "px";
-      el.style.fontSize = (1.3 + Math.random() * 2.0) + "rem";
-      el.style.animationDuration = (4 + Math.random() * 3.5) + "s";
-      el.style.transform = "rotate(" + (Math.random() * 25 - 12) + "deg)";
-
-      document.body.appendChild(el);
-      eggplantPool.push(el);
-
-      setTimeout(() => {
-        el.remove();
-        const index = eggplantPool.indexOf(el);
-        if (index !== -1) eggplantPool.splice(index, 1);
-      }, 8500);
-    }
-
-    setInterval(() => {
-      meme1.textContent = randomItem(memes);
-      meme2.textContent = randomItem(memes);
-      meme3.textContent = randomItem([
-        "O berinjela!!",
-        "🍆 O berinjela!! 🍆",
-        "BERINJELA SUPREMA",
-        "o berinjela voltou",
-        "resenha do berinjela"
-      ]);
-    }, 1100);
-
-    let msgIndex = 0;
-    setInterval(() => {
-      statusEl.textContent = messages[msgIndex % messages.length];
-      msgIndex++;
-    }, 1300);
-
-    const totalSeconds = 20;
-    let remaining = totalSeconds;
-
-    countdownEl.textContent = `abrindo o vídeo em ${remaining} segundos`;
-
-    const countdownTimer = setInterval(() => {
-      remaining--;
-      if (remaining > 0) {
-        countdownEl.textContent = `abrindo o vídeo em ${remaining} segundos`;
+    function setTheme(newTheme) {
+      theme = newTheme;
+      if (theme === 'dark') {
+        app.removeAttribute('data-theme');
       } else {
-        countdownEl.textContent = "abrindo o vídeo...";
-        clearInterval(countdownTimer);
-        openVideo();
+        app.setAttribute('data-theme', theme);
       }
-    }, 1000);
-
-    openBtn.addEventListener("click", openVideo);
-
-    setInterval(spawnFloaty, 650);
-    setInterval(spawnEggplant, 900);
-
-    for (let i = 0; i < 8; i++) {
-      setTimeout(spawnFloaty, i * 200);
-      setTimeout(spawnEggplant, i * 240);
+      localStorage.setItem('museu-theme', theme);
+      render();
     }
 
-    setImageWithFallback();
+    menuBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    themeButtons.forEach(btn => {
+      btn.addEventListener('click', () => setTheme(btn.dataset.theme));
+    });
+
+    setTheme(theme);
+    render();
   </script>
 </body>
 </html>
