@@ -227,6 +227,7 @@
       background: #ffffff;
       border: 1px solid var(--line);
       transition: transform 0.22s ease, box-shadow 0.22s ease;
+      cursor: zoom-in;
     }
 
     .photo:hover {
@@ -253,6 +254,97 @@
     .empty {
       padding: 18px;
       color: var(--muted);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 90;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-card {
+      width: min(92vw, 1100px);
+      max-height: 92vh;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lightbox-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .lightbox-title {
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .lightbox-back {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 0 12px;
+      height: 38px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 700;
+      flex: 0 0 auto;
+      display: none;
+    }
+
+    .lightbox-close {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      flex: 0 0 auto;
+    }
+
+    .lightbox-image-wrap {
+      background: #0f172a;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .lightbox-image {
+      max-width: 100%;
+      max-height: 78vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      border-radius: 12px;
     }
 
     .drawer-backdrop {
@@ -370,6 +462,22 @@
     }
 
     @media (max-width: 760px) {
+      .lightbox-back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lightbox-top {
+        gap: 8px;
+      }
+
+      .lightbox-title {
+        flex: 1;
+        text-align: center;
+      }
+
+      .drawer { width: 86vw; }
       .drawer { width: 86vw; }
 
       .topbar {
@@ -436,6 +544,19 @@
       .photo-name { font-size: 0.82rem; padding: 10px; }
       .drawer-body { padding: 14px; }
       .theme-grid { grid-template-columns: 1fr 1fr; }
+
+      .lightbox-card {
+        width: 96vw;
+        max-height: 94vh;
+      }
+
+      .lightbox-image-wrap {
+        padding: 8px;
+      }
+
+      .lightbox-image {
+        max-height: 80vh;
+      }
     }
 
     @media (max-width: 480px) {
@@ -461,6 +582,18 @@
         padding: 11px 12px;
         font-size: 0.9rem;
         border-radius: 12px;
+      }
+
+      .lightbox-card {
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+
+      .lightbox-image {
+        max-height: calc(100vh - 66px);
+        border-radius: 0;
       }
     }
   </style>
@@ -492,6 +625,19 @@
 
       <div class="sections" id="content"></div>
     </main>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-card" role="dialog" aria-modal="true" aria-label="Visualização da foto">
+      <div class="lightbox-top">
+        <button class="lightbox-back" id="lightboxBack" aria-label="Voltar para a galeria">← Galeria</button>
+        <div class="lightbox-title" id="lightboxTitle">Foto</div>
+        <button class="lightbox-close" id="lightboxClose" aria-label="Fechar visualização">×</button>
+      </div>
+      <div class="lightbox-image-wrap">
+        <img class="lightbox-image" id="lightboxImage" alt="Foto ampliada" />
+      </div>
+    </div>
   </div>
 
   <div class="drawer-backdrop" id="backdrop"></div>
@@ -530,37 +676,12 @@
 
   <script>
     const PHOTOS = [
-      "rafael1.jpg",
-      "rafael2.jpg",
-      "rafael3.jpg",
-      "rafael4.jpg",
-      "rafael5.jpg",
-      "rafael6.jpg",
-      "rafael7.jpg",
-      "rafael8.jpg",
-      "rafael9.jpg",
-      "rafael10.jpg",
-      "lima1.jpg",
-      "lima2.jpg",
-      "lima3.jpg",
-      "lima4.jpg",
-      "lima5.jpg",
-      "lima6.jpg",
-      "lima7.jpg",
-      "lima8.jpg",
-      "lima9.jpg",
-      "lima10.jpg",
-      "lima11.jpg",
-      "lima12.jpg",
-      "lima13.jpg",
-      "lima14.jpg",
-      "lima15.jpg",
-      "lima16.jpg",
-      "lucas1.jpg",
-      "lucas2.jpg",
-      "conjunto1.jpg",
-      
-      
+      "Rafael1.jpg",
+      "Rafael2.jpg",
+      "Rafael3.jpg",
+      "Joao1.jpg",
+      "Joao2.jpg",
+      "Pedro1.jpg"
     ];
 
     const app = document.getElementById('app');
@@ -571,6 +692,11 @@
     const tabs = document.getElementById('tabs');
     const content = document.getElementById('content');
     const themeButtons = document.querySelectorAll('.theme-btn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxBack = document.getElementById('lightboxBack');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
 
     let active = 'all';
     let theme = localStorage.getItem('museu-theme') || 'neon';
@@ -652,13 +778,20 @@
           </div>
           <div class="photos">
             ${files.map(file => `
-              <article class="photo">
+              <article class="photo" data-file="${file}">
                 <img src="${file}" alt="${file}">
                 <div class="photo-name">${file}</div>
               </article>
             `).join('')}
           </div>
         `;
+                section.querySelectorAll('.photo').forEach(card => {
+          card.addEventListener('click', () => {
+            const file = card.dataset.file || '';
+            openLightbox(file, file);
+          });
+        });
+
         content.appendChild(section);
       });
     }
@@ -681,9 +814,28 @@
       render();
     }
 
+    function openLightbox(src, title) {
+      lightboxImage.src = src;
+      lightboxImage.alt = title;
+      lightboxTitle.textContent = title;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
     menuBtn.addEventListener('click', openDrawer);
     closeBtn.addEventListener('click', closeDrawer);
     backdrop.addEventListener('click', closeDrawer);
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxBack.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeDrawer();
     });
