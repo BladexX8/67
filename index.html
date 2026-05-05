@@ -369,7 +369,11 @@
       <div class="big">🍆 O BERINJELA!! 🍆</div>
 
       <div class="photo-box">
-        <img src="rafael.png" alt="Rafael guloso irresponsavel">
+        <img
+          src="rafael.jpg"
+          alt="Rafael guloso irresponsavel"
+          onerror="this.onerror=null; this.src='rafael.png';"
+        >
         <div class="photo-caption">Rafael guloso irresponsavel</div>
       </div>
 
@@ -505,7 +509,13 @@
     setInterval(() => {
       meme1.textContent = randomItem(memes);
       meme2.textContent = randomItem(memes);
-      meme3.textContent = randomItem(["O berinjela!!", "🍆 O berinjela!! 🍆", "BERINJELA SUPREMA", "o berinjela voltou", "resenha do berinjela"]);
+      meme3.textContent = randomItem([
+        "O berinjela!!",
+        "🍆 O berinjela!! 🍆",
+        "BERINJELA SUPREMA",
+        "o berinjela voltou",
+        "resenha do berinjela"
+      ]);
     }, 1100);
 
     let msgIndex = 0;
